@@ -1,0 +1,25 @@
+workflows:
+  android-build:
+    name: Build Dot Android APK
+    max_build_duration: 45
+    environment:
+      vars:
+        JAVA_VERSION: 17
+      android:
+        image: android-33
+    scripts:
+      - name: Set up Java
+        script: |
+          echo "Using Java version $JAVA_VERSION"
+      - name: Build Debug APK
+        script: |
+          ./gradlew assembleDebug
+    artifacts:
+      - build/app/outputs/apk/debug/*.apk
+    publishing:
+      email:
+        recipients:
+          - tanviir.hossen@gmail.com
+        notify:
+          success: true
+          failure: true
